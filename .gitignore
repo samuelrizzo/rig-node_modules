@@ -1,0 +1,45 @@
+# Build output
+build/
+Release/
+Debug/
+x64/
+x86/
+
+# Benchmarks
+benchmarks/
+
+# Visual Studio
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+.vs/
+ipch/
+*.iobj
+*.ipdb
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.tlog/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+_deps/
+
+# Compiled output
+*.exe
+*.obj
+*.o
+*.pch
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
