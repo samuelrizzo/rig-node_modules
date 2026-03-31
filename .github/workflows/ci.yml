@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - ci/**
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            artifact_name: rip-node_modules-windows-x64
+            binary_name: rip-node_modules.exe
+          - os: ubuntu-latest
+            artifact_name: rip-node_modules-linux-x64
+            binary_name: rip-node_modules
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Install package contents
+        run: cmake --install build --config Release --prefix dist
+
+      - name: Verify installed binary
+        shell: bash
+        run: test -f "dist/bin/${{ matrix.binary_name }}"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: dist/bin/${{ matrix.binary_name }}
+          if-no-files-found: error

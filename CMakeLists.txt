@@ -38,3 +38,9 @@ endif()
 if(WIN32)
     target_link_libraries(rip-node_modules PRIVATE Shlwapi)
 endif()
+
+include(GNUInstallDirs)
+
+install(TARGETS rip-node_modules
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
